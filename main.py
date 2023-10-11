@@ -1,6 +1,16 @@
 import Task as t
 import Task_Stack as ts
 
-t1 = t.Task("start", "end", "text")
-t2 = t.Task("", "", "text")
-print(ts.TaskStack.__str__())
+print("===============")
+print("= Task Brewer =")
+print("===============\n")
+cnt = True
+while cnt:
+    command = input("Enter command: ")
+    match command:
+        case "exit":
+            cnt = False
+        case "active":
+            print(ts.TaskStack.getActiveTasks())
+        case "completed":
+            print(ts.TaskStack.getCompletedTasks())
