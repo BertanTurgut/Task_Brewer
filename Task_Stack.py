@@ -24,27 +24,27 @@ class TaskStack:
 
     @classmethod
     def getActiveTasks(cls):
-        string = "==v==\n"
+        string = "====v====\n"
         counter = 0
         for task in cls.stack:
             counter += 1
             string += "~~Task " + str(counter) + "~~\n" + task.__str__()
-        return string + "==^=="
+        return string + "====^===="
 
     @classmethod
     def getCompletedTasks(cls):
-        string = "==v==\n"
+        string = "====v====\n"
         counter = 0
         for task in cls.completed:
             counter += 1
             string += "~~Task " + str(counter) + "~~\n" + task.__str__()
-        return string + "==^=="
+        return string + "====^===="
 
     @classmethod
     def getCancelledTasks(cls):
-        string = "==v==\n"
+        string = "====v====\n"
         counter = 0
         for task in cls.canceled:
             counter += 1
             string += "~~Task " + str(counter) + "~~\n" + task.__str__()
-        return string + "==^=="
+        return string + "====^===="

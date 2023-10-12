@@ -1,7 +1,6 @@
 import time
-
-import Task_Stack as ts
 import datetime
+import Task_Stack as ts
 
 class Task:
     def __init__(self, end_date: str, text: str, importance=1):
@@ -28,6 +27,17 @@ class Task:
     def deactivate(self):
         self.active = False
         ts.TaskStack.removeTask(self.id, self.completed, self.canceled)
+
+    def edit(self, end_date: str, text: str, importance: int):
+        if end_date == "-":
+            end_date = self.end_date
+        self.end_date = end_date
+        if text == "-":
+            text = self.text
+        self.text = text
+        if importance == 0:
+            importance = self.importance
+        self.importance = importance
 
     def __str__(self):
         string = "ID: " + self.id + "\nImportance: " + str(self.importance) + "\nEnd Date: " + self.end_date + \
