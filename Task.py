@@ -4,11 +4,11 @@ import Task_Stack as ts
 import datetime
 
 class Task:
-    def __init__(self, start_date: str, end_date: str, text: str, importance=1, active=True):
+    def __init__(self, end_date: str, text: str, importance=1):
         self.id = Task.idFormatter(str(datetime.datetime.now())[:21])
         self.importance = importance
         self.end_date = end_date
-        self.active = active
+        self.active = True
         self.completed = False
         self.canceled = False
         self.text = text
@@ -17,13 +17,21 @@ class Task:
 
         time.sleep(0.1)
 
-    def remove(self):
-        ts.TaskStack.removeTask(self.id, self.completed)
-        pass
+    def complete(self):
+        self.completed = True
+        self.deactivate()
+
+    def cancel(self):
+        self.canceled = True
+        self.deactivate()
+
+    def deactivate(self):
+        self.active = False
+        ts.TaskStack.removeTask(self.id, self.completed, self.canceled)
 
     def __str__(self):
         string = "ID: " + self.id + "\nImportance: " + str(self.importance) + "\nEnd Date: " + self.end_date + \
-                 "\nActive: " + str(self.active) + "\nCompleted: " + str(self.completed) + "\nCanceled: " + \
+                 "\nActive: " + str(self.active) + "\nCompleted: " + str(self.completed) + "\nCancelled: " + \
                  str(self.canceled) + "\nText: " + self.text + "\n"
         return string
 

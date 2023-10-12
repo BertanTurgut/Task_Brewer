@@ -6,13 +6,13 @@ class TaskStack:
     canceled = []
 
     @classmethod
-    def removeTask(cls, task_id: str, completed: bool):
+    def removeTask(cls, task_id: str, completed: bool, canceled: bool):
         for task in TaskStack.stack:
             if task.id == task_id:
                 cls.stack.remove(task)
                 if completed:
                     TaskStack.completed.append(task)
-                else:
+                elif canceled:
                     TaskStack.canceled.append(task)
 
     @classmethod
