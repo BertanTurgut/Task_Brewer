@@ -1,6 +1,7 @@
 import time
 import datetime
 import Task_Stack as ts
+import sqlite
 
 class Task:
     def __init__(self, end_date: str, text: str, importance=1):
@@ -9,7 +10,7 @@ class Task:
         self.end_date = end_date
         self.active = True
         self.completed = False
-        self.canceled = False
+        self.cancelled = False
         self.text = text
 
         ts.TaskStack.appendTask(self, self.completed)
@@ -21,12 +22,12 @@ class Task:
         self.deactivate()
 
     def cancel(self):
-        self.canceled = True
+        self.cancelled = True
         self.deactivate()
 
     def deactivate(self):
         self.active = False
-        ts.TaskStack.removeTask(self.id, self.completed, self.canceled)
+        ts.TaskStack.removeTask(self.id, self.completed, self.cancelled)
 
     def edit(self, end_date: str, text: str, importance: int):
         if end_date == "-":
@@ -42,7 +43,7 @@ class Task:
     def __str__(self):
         string = "ID: " + self.id + "\nImportance: " + str(self.importance) + "\nEnd Date: " + self.end_date + \
                  "\nActive: " + str(self.active) + "\nCompleted: " + str(self.completed) + "\nCancelled: " + \
-                 str(self.canceled) + "\nText: " + self.text + "\n"
+                 str(self.cancelled) + "\nText: " + self.text + "\n"
         return string
 
     def __lt__(self, other):
