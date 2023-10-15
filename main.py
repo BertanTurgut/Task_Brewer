@@ -6,6 +6,7 @@ import sqlite
 print("===============")
 print("= Task Brewer =")
 print("===============\n")
+cursor = sqlite.connect()
 cnt = True
 while cnt:
     command = input("Enter command: ")
@@ -33,9 +34,8 @@ while cnt:
                                                                    (str(datetime.datetime.now())).replace("-", "")[i]) \
                                             == -1:
                                         raise Exception
-                                    elif t.Task.compareStringNumbers(index,
-                                                                   (str(datetime.datetime.now())).replace("-", "")[i]) \
-                                        == 1:
+                                    elif t.Task.compareStringNumbers(index, (str(datetime.datetime.now()))
+                                                                     .replace("-", "")[i]) == 1:
                                         break
                                     i += 1
                             text = str(input("Text: "))
@@ -96,7 +96,7 @@ while cnt:
                                                    (str(datetime.datetime.now())).replace("-", "")[i]) == -1:
                         raise Exception
                     elif t.Task.compareStringNumbers(index,
-                                                   (str(datetime.datetime.now())).replace("-", "")[i]) == 1:
+                                                     (str(datetime.datetime.now())).replace("-", "")[i]) == 1:
                         break
                     i += 1
                 text = str(input("Text: "))

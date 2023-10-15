@@ -1,7 +1,6 @@
 import time
 import datetime
 import Task_Stack as ts
-import sqlite
 
 class Task:
     def __init__(self, end_date: str, text: str, importance=1):
@@ -16,6 +15,17 @@ class Task:
         ts.TaskStack.appendTask(self, self.completed)
 
         time.sleep(0.1)
+
+    def manageTask(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
+                 cancelled: bool):
+        self.id = id
+        self.importance = importance
+        self.end_date = end_date
+        self.text = text
+        self.active = active
+        self.completed = completed
+        self.cancelled = cancelled
+        pass
 
     def complete(self):
         self.completed = True

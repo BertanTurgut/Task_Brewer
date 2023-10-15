@@ -49,3 +49,13 @@ class TaskStack:
             counter += 1
             string += "~~Task " + str(counter) + "~~\n" + task.__str__()
         return string + "====^===="
+
+    @classmethod
+    def loadData(cls):
+        stack_dict = sqlite.fetchData()
+        cursor = sqlite.connect()
+
+    @classmethod
+    def saveData(cls):
+        cursor = sqlite.connect()
+        pass
