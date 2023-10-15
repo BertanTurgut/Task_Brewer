@@ -32,6 +32,10 @@ while cnt:
                                                                    (str(datetime.datetime.now())).replace("-", "")[i]) \
                                             == -1:
                                         raise Exception
+                                    elif t.Task.compareStringNumbers(index,
+                                                                   (str(datetime.datetime.now())).replace("-", "")[i]) \
+                                        == 1:
+                                        break
                                     i += 1
                             text = str(input("Text: "))
                             importance = int(input("Importance: "))
@@ -90,6 +94,9 @@ while cnt:
                     if t.Task.compareStringNumbers(index,
                                                    (str(datetime.datetime.now())).replace("-", "")[i]) == -1:
                         raise Exception
+                    elif t.Task.compareStringNumbers(index,
+                                                   (str(datetime.datetime.now())).replace("-", "")[i]) == 1:
+                        break
                     i += 1
                 text = str(input("Text: "))
                 importance = int(input("Importance: "))
