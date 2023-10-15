@@ -17,9 +17,11 @@ class TaskStack:
                     TaskStack.canceled.append(task)
 
     @classmethod
-    def appendTask(cls, task: t, completed: bool):
+    def appendTask(cls, task: t, completed: bool, cancelled: bool):
         if completed:
             cls.completed.append(task)
+        elif cancelled:
+            cls.canceled.append(task)
         else:
             cls.stack.append(task)
 
@@ -49,11 +51,6 @@ class TaskStack:
             counter += 1
             string += "~~Task " + str(counter) + "~~\n" + task.__str__()
         return string + "====^===="
-
-    @classmethod
-    def loadData(cls):
-        stack_dict = sqlite.fetchData()
-        cursor = sqlite.connect()
 
     @classmethod
     def saveData(cls):

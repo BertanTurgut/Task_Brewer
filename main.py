@@ -6,7 +6,6 @@ import sqlite
 print("===============")
 print("= Task Brewer =")
 print("===============\n")
-cursor = sqlite.connect()
 cnt = True
 while cnt:
     command = input("Enter command: ")
@@ -104,7 +103,7 @@ while cnt:
                 save = input("Approve? ")
                 match save:
                     case "yes":
-                        task = t.Task(deadline, text, importance)
+                        task = t.Task(False, deadline, text, importance)
                     case "no":
                         pass
                     case _:

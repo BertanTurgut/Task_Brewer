@@ -3,20 +3,27 @@ import datetime
 import Task_Stack as ts
 
 class Task:
-    def __init__(self, end_date: str, text: str, importance=1):
-        self.id = Task.idFormatter(str(datetime.datetime.now())[:21])
+    def __init__(self, database_fetch: bool, end_date: str, text: str, importance=1, id="", active=False,
+                 completed=False, cancelled=False):
         self.importance = importance
         self.end_date = end_date
-        self.active = True
-        self.completed = False
-        self.cancelled = False
         self.text = text
+        if database_fetch:
+            self.id = id
+            self.active = active
+            self.completed = completed
+            self.cancelled = cancelled
+        else:
+            self.id = Task.idFormatter(str(datetime.datetime.now())[:21])
+            self.active = True
+            self.completed = False
+            self.cancelled = False
 
-        ts.TaskStack.appendTask(self, self.completed)
+        ts.TaskStack.appendTask(self, self.completed, self.cancelled)
 
         time.sleep(0.1)
 
-    def manageTask(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
+    def completeAccess(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
                  cancelled: bool):
         self.id = id
         self.importance = importance
