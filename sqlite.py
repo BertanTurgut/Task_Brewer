@@ -23,8 +23,8 @@ def deleteTableData(cursor: sqlite3, table_name="tasks"):
     cursor.connection.commit()
 
 def insertTask(cursor: sqlite3, task: t, table_name="tasks"):
-    insert = f"INSERT INTO {table_name} VALUES (\"{task.id}\", {task.importance}, \"{task.end_date}\", {task.active}, " \
-             f"{task.completed}, {task.cancelled}, \"{task.text}\")"
+    insert = f"INSERT INTO {table_name} VALUES (\"{task.id}\", {task.importance}, \"{task.end_date}\", " \
+             f"{task.active}, {task.completed}, {task.cancelled}, \"{task.text}\")"
     cursor.execute(insert)
     cursor.connection.commit()
 

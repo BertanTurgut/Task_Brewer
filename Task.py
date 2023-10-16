@@ -1,6 +1,7 @@
 import time
 import datetime
 import Task_Stack as ts
+import sqlite
 
 class Task:
     def __init__(self, database_fetch: bool, end_date: str, text: str, importance=1, id="", active=False,
@@ -18,10 +19,16 @@ class Task:
             self.active = True
             self.completed = False
             self.cancelled = False
-
         ts.TaskStack.appendTask(self, self.completed, self.cancelled)
-
         time.sleep(0.1)
+
+    @staticmethod
+    def fetchFromDatabase(cursor: sqlite):
+        stack_dict = sqlite.fetchData(cursor)
+        for data_list in stack_dict.values():
+            for data_tuple in data_list:
+                Task(True, data_tuple[2], data_tuple[6], data_tuple[1], data_tuple[0], data_tuple[3], data_tuple[4],
+                     data_tuple[5])
 
     def completeAccess(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
                  cancelled: bool):
@@ -46,6 +53,9 @@ class Task:
         self.active = False
         ts.TaskStack.removeTask(self.id, self.completed, self.cancelled)
 
+    def stateControl(self):
+        pass
+
     def edit(self, end_date: str, text: str, importance: int):
         if end_date == "-":
             end_date = self.end_date
@@ -60,7 +70,7 @@ class Task:
     def __str__(self):
         string = "ID: " + self.id + "\nImportance: " + str(self.importance) + "\nEnd Date: " + self.end_date + \
                  "\nActive: " + str(self.active) + "\nCompleted: " + str(self.completed) + "\nCancelled: " + \
-                 str(self.cancelled) + "\nText: " + self.text + "\n"
+                 str(self.cancelled) + "\nText: \"" + self.text + "\"\n"
         return string
 
     def __lt__(self, other):

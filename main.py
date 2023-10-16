@@ -6,12 +6,33 @@ import sqlite
 print("===============")
 print("= Task Brewer =")
 print("===============\n")
+cursor = sqlite.connect()
+try:
+    print("Fetching")
+    t.Task.fetchFromDatabase(cursor)
+    print("Fetch successful\n")
+except:
+    print("Fetch unsuccessful\n")
 cnt = True
 while cnt:
     command = input("Enter command: ")
     match command:
         case "exit":
-            cnt = False
+            print("\nSaving stacks")
+            try:
+                ts.TaskStack.saveTaskStacks(cursor)
+                print("Saved stacks")
+                print("Exiting program")
+                cnt = False
+            except:
+                print("Save unsuccessful")
+                command = input("Exit anyways?")
+                match command:
+                    case "yes":
+                        cnt = False
+                        print("Exiting program")
+                    case _:
+                        pass
         case "active":
             print(ts.TaskStack.getActiveTasks())
             inActive = True
