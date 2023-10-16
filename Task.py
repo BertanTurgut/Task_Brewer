@@ -29,8 +29,12 @@ class Task:
         stack_dict = sqlite.fetchData(cursor)
         for data_list in stack_dict.values():
             for data_tuple in data_list:
-                Task(True, data_tuple[2], data_tuple[7], data_tuple[1], data_tuple[0], data_tuple[3], data_tuple[4],
-                     data_tuple[5], data_tuple[6])
+                active = True if data_tuple[3] == 1 else False
+                completed = True if data_tuple[4] == 1 else False
+                cancelled = True if data_tuple[5] == 1 else False
+                missed = True if data_tuple[6] == 1 else False
+                Task(True, data_tuple[2], data_tuple[7], data_tuple[1], data_tuple[0], active, completed,
+                     cancelled, missed)
 
     def completeAccess(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
                        cancelled: bool, missed: bool):
@@ -58,7 +62,7 @@ class Task:
 
     def deactivate(self):
         self.active = False
-        ts.TaskStack.removeTask(self.id, self.completed, self.cancelled)
+        ts.TaskStack.removeTask(self.id, self.completed, self.cancelled, self.missed)
 
     def stateControl(self):
         pass

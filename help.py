@@ -15,7 +15,11 @@ command_dict["\"actives\"->exit"] = "Exits \"actives\" tab and returns main tab.
 
 def helpString(path: str = "all"):
     help_string = ""
+    command_list = []
     for command in command_dict.keys():
+        command_list.append(command)
+    command_list.sort()
+    for command in command_list:
         match path:
             case "all":
                 help_string += f"{command : <40}{command_dict[command]}\n"
