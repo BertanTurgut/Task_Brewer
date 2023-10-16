@@ -2,6 +2,7 @@ import datetime
 import Task as t
 import Task_Stack as ts
 import sqlite
+import help
 
 print("===============")
 print("= Task Brewer =")
@@ -18,6 +19,8 @@ cnt = True
 while cnt:
     command = input("Enter command: ")
     match command:
+        case "help":
+            print(help.helpString("main"))
         case "exit":
             print("\nSaving stacks")
             try:
@@ -40,6 +43,8 @@ while cnt:
             while inActive:
                 command = input("Enter command in actives: ")
                 match command:
+                    case "help":
+                        print(help.helpString("actives"))
                     case "edit task":
                         try:
                             number = int(input("Task number: "))
