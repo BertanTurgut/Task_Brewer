@@ -33,7 +33,7 @@ def updateTask(cursor: sqlite3, table_name: str, id: str, end_date: str, text: s
     active = 1 if active else 0
     completed = 1 if completed else 0
     cancelled = 1 if cancelled else 0
-    missed = 1 if cancelled else 0
+    missed = 1 if missed else 0
     update = f"UPDATE {table_name} SET end_date = \"{end_date}\", text = \"{text}\", active = {active}, " \
              f"completed = {completed}, cancelled = {cancelled}, missed = {missed} WHERE id = \"{id}\""
     cursor.execute(update)

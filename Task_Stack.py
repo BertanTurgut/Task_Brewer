@@ -77,7 +77,3 @@ class TaskStack:
             sqlite.insertTask(cursor, cancelled)
         for missed in cls.missed:
             sqlite.insertTask(cursor, missed)
-
-    @classmethod
-    def stateControlTaskStacks(cls, cursor: sqlite):
-        pass

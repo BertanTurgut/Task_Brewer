@@ -7,16 +7,26 @@ class Task:
     def __init__(self, database_fetch: bool, end_date: str, text: str, importance=1, id="", active=False,
                  completed=False, cancelled=False, missed=False):
         self.importance = importance
-        self.end_date = end_date
         self.text = text
         if database_fetch:
             self.id = id
-            self.active = active
+            self.end_date = end_date
             self.completed = completed
             self.cancelled = cancelled
-            self.missed = missed
+            if not missed:
+                formatted_deadline = end_date.replace(".", "")
+                i = 0
+                for index in formatted_deadline:
+                    if Task.compareStringNumbers(index, (str(datetime.datetime.now())).replace("-", "")[i]) == -1:
+                        self.active = False
+                        self.missed = True
+                        break
+                    elif Task.compareStringNumbers(index, (str(datetime.datetime.now())).replace("-", "")[i]) == 1:
+                        break
+                    i += 1
         else:
             self.id = Task.idFormatter(str(datetime.datetime.now())[:21])
+            self.end_date = end_date
             self.active = True
             self.completed = False
             self.cancelled = False
