@@ -5,7 +5,7 @@ import sqlite
 
 class Task:
     def __init__(self, database_fetch: bool, end_date: str, text: str, importance=1, id="", active=False,
-                 completed=False, cancelled=False):
+                 completed=False, cancelled=False, missed=False):
         self.importance = importance
         self.end_date = end_date
         self.text = text
@@ -14,12 +14,14 @@ class Task:
             self.active = active
             self.completed = completed
             self.cancelled = cancelled
+            self.missed = missed
         else:
             self.id = Task.idFormatter(str(datetime.datetime.now())[:21])
             self.active = True
             self.completed = False
             self.cancelled = False
-        ts.TaskStack.appendTask(self, self.completed, self.cancelled)
+            self.missed = False
+        ts.TaskStack.appendTask(self, self.completed, self.cancelled, self.missed)
         time.sleep(0.1)
 
     @staticmethod
@@ -27,11 +29,11 @@ class Task:
         stack_dict = sqlite.fetchData(cursor)
         for data_list in stack_dict.values():
             for data_tuple in data_list:
-                Task(True, data_tuple[2], data_tuple[6], data_tuple[1], data_tuple[0], data_tuple[3], data_tuple[4],
-                     data_tuple[5])
+                Task(True, data_tuple[2], data_tuple[7], data_tuple[1], data_tuple[0], data_tuple[3], data_tuple[4],
+                     data_tuple[5], data_tuple[6])
 
     def completeAccess(self, id: str, end_date: str, text: str, importance: int, active: bool, completed: bool,
-                 cancelled: bool):
+                       cancelled: bool, missed: bool):
         self.id = id
         self.importance = importance
         self.end_date = end_date
@@ -39,6 +41,7 @@ class Task:
         self.active = active
         self.completed = completed
         self.cancelled = cancelled
+        self.missed = missed
         pass
 
     def complete(self):
@@ -47,6 +50,10 @@ class Task:
 
     def cancel(self):
         self.cancelled = True
+        self.deactivate()
+
+    def miss(self):
+        self.missed = True
         self.deactivate()
 
     def deactivate(self):
@@ -70,7 +77,7 @@ class Task:
     def __str__(self):
         string = "ID: " + self.id + "\nImportance: " + str(self.importance) + "\nEnd Date: " + self.end_date + \
                  "\nActive: " + str(self.active) + "\nCompleted: " + str(self.completed) + "\nCancelled: " + \
-                 str(self.cancelled) + "\nText: \"" + self.text + "\"\n"
+                 str(self.cancelled) + "\nMissed: " + str(self.missed) + "\nText: \"" + self.text + "\"\n"
         return string
 
     def __lt__(self, other):

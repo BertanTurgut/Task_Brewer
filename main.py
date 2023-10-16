@@ -7,6 +7,7 @@ print("===============")
 print("= Task Brewer =")
 print("===============\n")
 cursor = sqlite.connect()
+sqlite.createTable(cursor)
 try:
     print("Fetching")
     t.Task.fetchFromDatabase(cursor)
@@ -106,6 +107,8 @@ while cnt:
             print(ts.TaskStack.getCompletedTasks())
         case "cancelled":
             print(ts.TaskStack.getCancelledTasks())
+        case "missed":
+            print(ts.TaskStack.getMissedTasks())
         case "add task":
             try:
                 deadline = str(input("End Date: "))
