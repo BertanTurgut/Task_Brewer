@@ -46,7 +46,7 @@ while cnt:
             cnt = False
             print("\nExiting program")
         case "active":
-            print(ts.TaskStack.getActiveTasks())
+            print(ts.TaskStack.getActiveTasks(True))
             inActive = True
             while inActive:
                 command = input("Enter command in actives: ")
@@ -56,7 +56,7 @@ while cnt:
                     case "edit task":
                         try:
                             number = int(input("Task number: "))
-                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].__str__())
+                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].strCommonView())
                             deadline = str(input("End Date: "))
                             if deadline == "-":
                                 pass
@@ -87,7 +87,7 @@ while cnt:
                     case "complete task":
                         try:
                             number = int(input("Task number: "))
-                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].__str__())
+                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].strCommonView())
                             save = input("Approve? ")
                             match save:
                                 case "yes":
@@ -101,7 +101,7 @@ while cnt:
                     case "cancel task":
                         try:
                             number = int(input("Task number: "))
-                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].__str__())
+                            print("~~Task " + str(number) + "~~\n" + ts.TaskStack.stack[number - 1].strCommonView())
                             save = input("Approve? ")
                             match save:
                                 case "yes":
@@ -113,15 +113,29 @@ while cnt:
                         except:
                             print("Invalid demand")
                     case "list":
-                        print(ts.TaskStack.getActiveTasks())
+                        print(ts.TaskStack.getActiveTasks(True))
+                    case "search":
+                        searched_str = input("Searched string: ")
+                        candidates = ts.TaskStack.searchTask(searched_str, True)
+                        if candidates.__len__() == 0:
+                            print("Couldn't find any matching tasks")
+                        else:
+                            print(f"Found {candidates.__len__()} matching active tasks: ")
+                            string = "====v====\n"
+                            i = 1
+                            for task in candidates:
+                                string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                                i += 1
+                            string += "====^===="
+                            print(string)
                     case "exit":
                         inActive = False
         case "completed":
-            print(ts.TaskStack.getCompletedTasks())
+            print(ts.TaskStack.getCompletedTasks(True))
         case "cancelled":
-            print(ts.TaskStack.getCancelledTasks())
+            print(ts.TaskStack.getCancelledTasks(True))
         case "missed":
-            print(ts.TaskStack.getMissedTasks())
+            print(ts.TaskStack.getMissedTasks(True))
         case "add task":
             try:
                 deadline = str(input("End Date: "))
@@ -147,3 +161,73 @@ while cnt:
                         raise Exception
             except:
                 print("Invalid demand")
+        case "search":
+            searched_str = input("Searched string: ")
+            candidates = ts.TaskStack.searchTask(searched_str)
+            if candidates.__len__() == 0:
+                print("Couldn't find any matching tasks")
+            else:
+                print(f"Found {candidates.__len__()} matching tasks: ")
+                string = "====v====\n"
+                i = 1
+                for task in candidates:
+                    string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                    i += 1
+                string += "====^===="
+                print(string)
+        case "search in active":
+            searched_str = input("Searched string: ")
+            candidates = ts.TaskStack.searchTask(searched_str, True)
+            if candidates.__len__() == 0:
+                print("Couldn't find any matching active tasks")
+            else:
+                print(f"Found {candidates.__len__()} matching active tasks: ")
+                string = "====v====\n"
+                i = 1
+                for task in candidates:
+                    string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                    i += 1
+                string += "====^===="
+                print(string)
+        case "search in completed":
+            searched_str = input("Searched string: ")
+            candidates = ts.TaskStack.searchTask(searched_str, False, True)
+            if candidates.__len__() == 0:
+                print("Couldn't find any matching completed tasks")
+            else:
+                print(f"Found {candidates.__len__()} matching completed tasks: ")
+                string = "====v====\n"
+                i = 1
+                for task in candidates:
+                    string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                    i += 1
+                string += "====^===="
+                print(string)
+        case "search in cancelled":
+            searched_str = input("Searched string: ")
+            candidates = ts.TaskStack.searchTask(searched_str, False, False, True)
+            if candidates.__len__() == 0:
+                print("Couldn't find any matching cancelled tasks")
+            else:
+                print(f"Found {candidates.__len__()} matching cancelled tasks: ")
+                string = "====v====\n"
+                i = 1
+                for task in candidates:
+                    string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                    i += 1
+                string += "====^===="
+                print(string)
+        case "search in missed":
+            searched_str = input("Searched string: ")
+            candidates = ts.TaskStack.searchTask(searched_str, False, False, False, True)
+            if candidates.__len__() == 0:
+                print("Couldn't find any matching missed tasks")
+            else:
+                print(f"Found {candidates.__len__()} matching missed tasks: ")
+                string = "====v====\n"
+                i = 1
+                for task in candidates:
+                    string += task.__str__() + "------\n" if i < candidates.__len__() else task.__str__()
+                    i += 1
+                string += "====^===="
+                print(string)

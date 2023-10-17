@@ -98,6 +98,11 @@ class Task:
                  str(self.cancelled) + "\nMissed: " + str(self.missed) + "\nText: \"" + self.text + "\"\n"
         return string
 
+    def strCommonView(self):
+        string = ("Importance: " + str(self.importance) + "\nEnd Date: " + self.end_date + "\nText: \"" + self.text +
+                  "\"\n")
+        return string
+
     def __lt__(self, other):
         i = 0
         for index in self.id:
