@@ -1,6 +1,7 @@
 command_dict = dict()
 command_dict["help"] = "Prints available commands for main tab."
 command_dict["exit"] = "Stores the complete data and terminates program."
+command_dict["exit without save"] = "Terminates program without saving any changed data."
 command_dict["active"] = "Lists active tasks and selects the \"actives\" tab."
 command_dict["completed"] = "Lists completed tasks."
 command_dict["cancelled"] = "Lists cancelled tasks."

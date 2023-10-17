@@ -9,13 +9,18 @@ print("= Task Brewer =")
 print("===============\n")
 cursor = sqlite.connect()
 sqlite.createTable(cursor)
+unnoticed_misses = 0
 try:
     print("Fetching")
     t.Task.fetchFromDatabase(cursor)
     print("Fetch successful\n")
 except:
-    print("Fetch unsuccessful\n")
+    print("[!] Fetch unsuccessful\n")
 cnt = True
+if unnoticed_misses == 1:
+    print("[!] 1 task is missed since last entry\n")
+elif unnoticed_misses > 1:
+    print(f"[!] {unnoticed_misses} tasks are missed since last entry\n")
 while cnt:
     command = input("Enter command: ")
     match command:
@@ -25,18 +30,21 @@ while cnt:
             print("\nSaving stacks")
             try:
                 ts.TaskStack.saveTaskStacks(cursor)
-                print("Saved stacks")
+                print("Saved stacks\n")
                 print("Exiting program")
                 cnt = False
             except:
-                print("Save unsuccessful")
+                print("[!] Save unsuccessful")
                 command = input("Exit anyways?")
                 match command:
                     case "yes":
                         cnt = False
-                        print("Exiting program")
+                        print("\nExiting program")
                     case _:
                         pass
+        case "exit without save":
+            cnt = False
+            print("\nExiting program")
         case "active":
             print(ts.TaskStack.getActiveTasks())
             inActive = True

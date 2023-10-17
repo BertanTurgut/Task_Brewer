@@ -11,15 +11,19 @@ class Task:
         if database_fetch:
             self.id = id
             self.end_date = end_date
+            self.active = active
             self.completed = completed
             self.cancelled = cancelled
-            if not missed:
+            self.missed = missed
+            if active:
                 formatted_deadline = end_date.replace(".", "")
                 i = 0
                 for index in formatted_deadline:
                     if Task.compareStringNumbers(index, (str(datetime.datetime.now())).replace("-", "")[i]) == -1:
                         self.active = False
                         self.missed = True
+                        from main import unnoticed_misses
+                        unnoticed_misses += 1
                         break
                     elif Task.compareStringNumbers(index, (str(datetime.datetime.now())).replace("-", "")[i]) == 1:
                         break
