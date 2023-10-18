@@ -123,5 +123,30 @@ class TaskStack:
                         candidate_list.append(task)
                 except:
                     pass
+        else:
+            for task in cls.stack:
+                try:
+                    if task.text.lower().find(lowered) != -1:
+                        candidate_list.append(task)
+                except:
+                    pass
+            for task in cls.completed:
+                try:
+                    if task.text.lower().find(lowered) != -1:
+                        candidate_list.append(task)
+                except:
+                    pass
+            for task in cls.cancelled:
+                try:
+                    if task.text.lower().find(lowered) != -1:
+                        candidate_list.append(task)
+                except:
+                    pass
+            for task in cls.missed:
+                try:
+                    if task.text.lower().find(lowered) != -1:
+                        candidate_list.append(task)
+                except:
+                    pass
         return candidate_list
 
